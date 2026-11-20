@@ -25,30 +25,30 @@ export const About: React.FC = () => {
       <Card className="overflow-hidden border border-border">
         <div className="relative h-48 sm:h-56 w-full">
           <img
-            src={SITE_IMAGES.heroInterior}
-            alt="Craftsmanship in Jacksonville"
+            src={SITE_IMAGES.aboutHero}
+            alt="Meet the detailer behind Jax Interior Detail"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-inverted/80 via-transparent to-transparent" />
-          <div className="absolute bottom-3 left-3 right-3 text-inverted-foreground">
-            <span className="text-[10px] text-inverted-muted block font-semibold uppercase tracking-wider">
-              Jacksonville Mobile Atelier
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+          <div className="absolute bottom-3 left-3 right-3 text-white">
+            <span className="text-[10px] text-white/80 block font-semibold uppercase tracking-wider">
+              Paul Ceki • Founder & Master Detailer
             </span>
             <p className="text-xs font-bold leading-tight">
-              &ldquo;Treating each cabin with the surgical care of fine upholstery artisans.&rdquo;
+              &ldquo;5 years detailing at Nissan & Toyota dealerships before bringing the mobile atelier to your driveway.&rdquo;
             </p>
           </div>
         </div>
       </Card>
 
-      {/* Mission Statement */}
+      {/* Story & Background from Website */}
       <Card className="p-4 bg-muted border-none">
         <div className="flex items-center gap-2 mb-2">
           <Sparkles className="w-4 h-4 text-primary" />
-          <span className="text-xs font-bold text-foreground">Our Philosophy</span>
+          <span className="text-xs font-bold text-foreground">Why We Focus on Interiors</span>
         </div>
         <p className="text-xs text-muted-foreground leading-relaxed">
-          {BUSINESS_INFO.mission}
+          The interior is the part of your vehicle you live with every day. It’s where coffee spills, pet hair works into carpets, and crumbs settle where regular vacuums cannot reach. We treat every vehicle with material-specific chemistry — whether delicate perforated leather, alcantara, or deep fabric extraction.
         </p>
       </Card>
 

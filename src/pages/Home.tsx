@@ -5,19 +5,16 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Select } from '@/components/ui/Select'
+import { BeforeAfterSlider } from '@/components/ui/BeforeAfterSlider'
 import { SITE_IMAGES, BUSINESS_INFO } from '@/data/siteData'
 
 export const Home: React.FC = () => {
-  const [sliderPos, setSliderPos] = useState(50)
+  const [transformationTab, setTransformationTab] = useState<'interior' | 'exterior'>('interior')
   const [serviceType, setServiceType] = useState('interior-detailing')
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [carModel, setCarModel] = useState('')
   const [submitted, setSubmitted] = useState(false)
-
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSliderPos(Number(e.target.value))
-  }
 
   const handleQuickQuote = (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,9 +30,9 @@ export const Home: React.FC = () => {
           <img
             src={SITE_IMAGES.heroInterior}
             alt="Mobile Interior Detailing Jacksonville"
-            className="w-full h-full object-cover brightness-[0.7]"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-inverted via-inverted/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
           <div className="absolute bottom-4 left-4 right-4 text-left">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-inverted-foreground leading-tight">
@@ -187,66 +184,69 @@ export const Home: React.FC = () => {
       </div>
 
       {/* Interactive Before & After Transformation Slider */}
-      {/* Interactive Before & After Transformation Slider */}
       <div className="text-left">
         <div className="flex items-center justify-between mb-2 px-0.5">
           <div>
-            
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">
+              Real Work In Jax
+            </span>
             <h3 className="text-base font-bold text-foreground leading-tight">
               The Transformation
             </h3>
           </div>
-          <span className="text-[10px] text-muted-foreground font-medium">Drag Slider</span>
+
+          <div className="flex items-center bg-muted p-0.5 rounded-lg border border-border">
+            <button
+              type="button"
+              onClick={() => setTransformationTab('interior')}
+              className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
+                transformationTab === 'interior'
+                  ? 'bg-primary text-primary-foreground shadow-2xs'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              Interior Minivan
+            </button>
+            <button
+              type="button"
+              onClick={() => setTransformationTab('exterior')}
+              className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
+                transformationTab === 'exterior'
+                  ? 'bg-primary text-primary-foreground shadow-2xs'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              SUV Exterior
+            </button>
+          </div>
         </div>
 
-        {/* Comparison Image Outside Card */}
-        <div className="relative h-60 sm:h-64 w-full rounded-2xl overflow-hidden select-none border border-border shadow-xs">
-          {/* After Image */}
-          <img
-            src={SITE_IMAGES.afterCarpet}
-            alt="After Steam Extraction Detail"
-            className="absolute inset-0 w-full h-full object-cover"
+        {/* Comparison Slider */}
+        {transformationTab === 'interior' ? (
+          <BeforeAfterSlider
+            beforeImage={SITE_IMAGES.minivanBefore}
+            afterImage={SITE_IMAGES.minivanAfter}
+            beforeLabel="BEFORE"
+            afterLabel="AFTER DETAIL"
+            initialPosition={49}
+            aspectRatio="aspect-[16/11]"
           />
-          <div className="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-xs text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">
-            AFTER STEAM DETAIL
-          </div>
-
-          {/* Before Image */}
-          <div
-            className="absolute inset-y-0 left-0 overflow-hidden"
-            style={{ width: `${sliderPos}%` }}
-          >
-            <img
-              src={SITE_IMAGES.beforeCarpet}
-              alt="Before Detailing"
-              className="absolute inset-0 w-full h-full object-cover max-w-none"
-              style={{ width: '100%', height: '100%' }}
-            />
-            <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">
-              BEFORE
-            </div>
-          </div>
-
-          {/* Slider Divider Bar */}
-          <div
-            className="absolute top-0 bottom-0 w-0.5 bg-white shadow-lg pointer-events-none"
-            style={{ left: `${sliderPos}%` }}
-          >
-            <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center text-stone-800 text-xs font-bold">
-              ↔
-            </div>
-          </div>
-
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={sliderPos}
-            onChange={handleSliderChange}
-            className="absolute inset-0 opacity-0 cursor-ew-resize w-full h-full z-20"
-            aria-label="Before and after comparison slider"
+        ) : (
+          <BeforeAfterSlider
+            beforeImage={SITE_IMAGES.suvDirty}
+            afterImage={SITE_IMAGES.suvSpotless}
+            beforeLabel="BEFORE WASH"
+            afterLabel="SPOTLESS GLOSS"
+            initialPosition={50}
+            aspectRatio="aspect-[16/11]"
           />
-        </div>
+        )}
+
+        <p className="text-[10px] text-muted-foreground mt-1.5 px-0.5 leading-snug">
+          {transformationTab === 'interior'
+            ? 'Deep fiber extraction on family minivan: coffee stains, heavy Florida sand, and ground-in roadway soil completely restored.'
+            : 'Multi-stage contact wash on graphite SUV: road salt, grime, and brake dust removed without swirl marks.'}
+        </p>
       </div>
 
       {/* The Jax Precision Touch Grid */}

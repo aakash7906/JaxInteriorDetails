@@ -34,15 +34,11 @@ export const ServiceDetail: React.FC = () => {
           <img
             src={service.image}
             alt={service.title}
-            className="w-full h-full object-cover brightness-[0.75]"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-inverted via-inverted/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-          <div className="absolute top-3 left-3">
-            <Badge variant="inverted" size="sm">
-              {service.tag}
-            </Badge>
-          </div>
+        
 
           <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
             <div>

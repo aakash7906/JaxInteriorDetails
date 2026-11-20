@@ -3,11 +3,12 @@ import { Sparkles, MessageSquare, Phone, ArrowRight, Eye, ShieldCheck } from 'lu
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
+import { BeforeAfterSlider } from '@/components/ui/BeforeAfterSlider'
 import { SITE_IMAGES, BUSINESS_INFO } from '@/data/siteData'
 
 export const Gallery: React.FC = () => {
   const [activeView, setActiveView] = useState<'split' | 'full'>('split')
-  const [sliderPos, setSliderPos] = useState(50)
+  const [selectedCase, setSelectedCase] = useState<'minivan' | 'suv'>('minivan')
 
   const detailCases = [
     {
@@ -38,6 +39,20 @@ export const Gallery: React.FC = () => {
       desc: 'Horsehair agitation coupled with precision pneumatic blast needles to purge dust, pet dander, and crumbs from seat tracks and vents.',
       image: SITE_IMAGES.creviceWork,
     },
+    {
+      id: 'waterfront',
+      badge: 'JACKSONVILLE RESIDENCE SERVICE',
+      title: 'Luxury SUV Waterfront Reset',
+      desc: 'Showroom finish delivered right to residential driveways across Duval and St. Johns county with completely self-contained deionized water rigs.',
+      image: SITE_IMAGES.luxurySuvSunset,
+    },
+    {
+      id: 'mobile-rig',
+      badge: 'MOBILE ATELIER CARE',
+      title: 'Five-Year Dealership Craftsmanship',
+      desc: 'Professional grade spot-treatment and surgical seam brushing performed directly at your home or workplace.',
+      image: SITE_IMAGES.mobileWork1,
+    },
   ]
 
   const stats = [
@@ -52,148 +67,91 @@ export const Gallery: React.FC = () => {
       <div className="px-0.5">
        
         <h2 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
-          See the Difference an Interior Detail Makes
+          The Detailing Difference
         </h2>
       </div>
 
-      {/* Featured Deep Extraction Chamber (Before & After) */}
-      <Card className="p-3.5 sm:p-4 overflow-hidden border border-border">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-foreground">
-              Deep Extraction Chamber
-            </span>
+      {/* Featured Deep Extraction Chamber (Before & After - Out of Card) */}
+      <div className="text-left flex flex-col gap-2.5">
+        <div className="flex items-center justify-between px-0.5">
+          <div className="flex items-center gap-1.5">
+            <h3 className="text-base font-bold text-foreground leading-tight">
+              {selectedCase === 'minivan' ? 'Minivan Interior Recovery' : 'Graphite SUV Exterior Wash'}
+            </h3>
           </div>
 
           <div className="flex items-center bg-muted p-0.5 rounded-lg border border-border-subtle">
             <button
-              onClick={() => setActiveView('split')}
-              className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
-                activeView === 'split'
+              onClick={() => setSelectedCase('minivan')}
+              className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
+                selectedCase === 'minivan'
                   ? 'bg-primary text-primary-foreground shadow-2xs'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
-              Split View
+              Interior
             </button>
             <button
-              onClick={() => setActiveView('full')}
-              className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
-                activeView === 'full'
+              onClick={() => setSelectedCase('suv')}
+              className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
+                selectedCase === 'suv'
                   ? 'bg-primary text-primary-foreground shadow-2xs'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
-              Full Switch
+              Exterior
             </button>
           </div>
         </div>
 
-        {/* Comparison Viewer */}
-        <div className="relative h-60 sm:h-72 w-full rounded-2xl overflow-hidden select-none">
-          {activeView === 'split' ? (
-            <>
-              {/* After Image Background */}
-              <img
-                src={SITE_IMAGES.afterCarpet}
-                alt="After Detail"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div className="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-xs text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">
-                AFTER
-              </div>
+        {/* Comparison Slider (Full width, out of the card) */}
+        {selectedCase === 'minivan' ? (
+          <BeforeAfterSlider
+            beforeImage={SITE_IMAGES.minivanBefore}
+            afterImage={SITE_IMAGES.minivanAfter}
+            beforeLabel="BEFORE"
+            afterLabel="RESTORED"
+            initialPosition={49}
+            aspectRatio="aspect-[16/11]"
+          />
+        ) : (
+          <BeforeAfterSlider
+            beforeImage={SITE_IMAGES.suvDirty}
+            afterImage={SITE_IMAGES.suvSpotless}
+            beforeLabel="BEFORE"
+            afterLabel="AFTER WASH"
+            initialPosition={50}
+            aspectRatio="aspect-[16/11]"
+          />
+        )}
 
-              {/* Before Image Clipped */}
-              <div
-                className="absolute inset-y-0 left-0 overflow-hidden"
-                style={{ width: `${sliderPos}%` }}
-              >
-                <img
-                  src={SITE_IMAGES.beforeCarpet}
-                  alt="Before Detail"
-                  className="absolute inset-0 w-full h-full object-cover max-w-none"
-                  style={{ width: '100%', height: '100%' }}
-                />
-                <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">
-                  BEFORE
-                </div>
-              </div>
+        {/* Text details below image */}
+        <div className="px-0.5">
+          <span className="text-[10px] font-bold text-foreground block">
+            {selectedCase === 'minivan' ? 'DRIVER CABIN RECOVERY' : 'DUAL-BUCKET CONTACT WASH'}
+          </span>
+          <p className="text-[10px] text-muted-foreground mt-0.5 leading-snug">
+            {selectedCase === 'minivan'
+              ? 'Carpet fibers penetrated 2.4 inches to lift Florida sand, muddy stains, and organic soils without sticky residue.'
+              : 'Multi-stage decontaminating foam wash safely lifting road grime, bug splatter, and wheel brake dust without swirl marks.'}
+          </p>
 
-              {/* Draggable Divider */}
-              <div
-                className="absolute top-0 bottom-0 w-0.5 bg-white shadow-lg pointer-events-none"
-                style={{ left: `${sliderPos}%` }}
-              >
-                <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center text-stone-800 text-[10px] font-bold">
-                  ↔
-                </div>
-              </div>
-
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={sliderPos}
-                onChange={(e) => setSliderPos(Number(e.target.value))}
-                className="absolute inset-0 opacity-0 cursor-ew-resize w-full h-full z-20"
-                aria-label="Before/After Slider"
-              />
-            </>
-          ) : (
-            <div className="grid grid-cols-2 h-full gap-1 bg-stone-900">
-              <div className="relative h-full">
-                <img
-                  src={SITE_IMAGES.beforeCarpet}
-                  alt="Before detail"
-                  className="w-full h-full object-cover"
-                />
-                <span className="absolute top-2 left-2 bg-black/70 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">
-                  BEFORE
-                </span>
-              </div>
-              <div className="relative h-full">
-                <img
-                  src={SITE_IMAGES.afterCarpet}
-                  alt="After detail"
-                  className="w-full h-full object-cover"
-                />
-                <span className="absolute top-2 right-2 bg-emerald-900/80 text-emerald-200 text-[9px] font-bold px-2 py-0.5 rounded-full">
-                  RESTORED
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-3 flex items-center justify-between text-left">
-          <div>
-            <span className="text-[10px] font-bold text-foreground block">
-              DRIVER CABIN RECOVERY
+          <div className="flex items-center gap-3 mt-2.5 pt-2 border-t border-border-subtle text-[10px] text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              {selectedCase === 'minivan' ? 'High-temp steam' : 'Foam pre-soak'}
             </span>
-            <p className="text-[10px] text-muted-foreground mt-0.5 leading-snug">
-              Carpet fibers penetrated 2.4 inches to lift Florida sand, muddy stains, and organic soils without sticky residue.
-            </p>
+            <span className="flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              {selectedCase === 'minivan' ? 'Enzymatic lift' : 'Grit-guard wash'}
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              {selectedCase === 'minivan' ? '2-hr door dry' : 'SiO2 gloss seal'}
+            </span>
           </div>
-          <span className="text-[10px] font-bold text-primary bg-primary-subtle px-2.5 py-1 rounded-lg shrink-0">
-            100% Fiber Extraction
-          </span>
         </div>
-
-        <div className="flex items-center gap-3 mt-3 pt-2.5 border-t border-border-subtle text-[10px] text-muted-foreground">
-          <span className="flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            High-temp steam
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            Enzymatic lift
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            2-hr door dry
-          </span>
-        </div>
-      </Card>
+      </div>
 
       {/* Detail Close-Ups Feed */}
       <div>
@@ -218,8 +176,7 @@ export const Gallery: React.FC = () => {
                   alt={item.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                <span className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-xs text-stone-900 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                <span className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-xs text-stone-900 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shadow-xs">
                   {item.badge}
                 </span>
               </div>

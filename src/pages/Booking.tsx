@@ -96,7 +96,7 @@ export const Booking: React.FC = () => {
           <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
           <div>
             <span className="text-[10px] font-bold text-foreground block">
-              MOBILE CONCIERGE ATELIER
+              MOBILE CAR WASH
             </span>
             <span className="text-[9px] text-muted-foreground font-medium">
               Jacksonville & within 30 miles • Driveway Service
@@ -277,21 +277,13 @@ export const Booking: React.FC = () => {
         )}
       </Card>
 
-      {/* Trust & Guarantee Banner */}
-      <div className="p-3 bg-muted rounded-2xl flex items-center justify-between text-[11px] text-muted-foreground">
-        <span className="flex items-center gap-1.5 font-medium text-foreground">
-          <ShieldCheck className="w-4 h-4 text-primary" />
-          100% Insured Jacksonville Rig
-        </span>
-        <span>Replies in &lt; 15 Mins</span>
-      </div>
 
       {/* Appointment Calendar Sheet Component (exact layout from 2nd reference image) */}
       <Sheet
         isOpen={isCalendarOpen}
         onClose={() => setIsCalendarOpen(false)}
         title="Appointment Calendar"
-        subtitle="Jax Interior Detail • Select or sync visit date"
+        subtitle="Select date"
         maxWidth="sm"
       >
         <div className="flex flex-col gap-3.5 text-left pt-1">
@@ -381,10 +373,7 @@ export const Booking: React.FC = () => {
               </span>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Clock className="w-3.5 h-3.5 text-primary shrink-0" />
-              <span>Reserved Window: {selectedTimeLabel}</span>
-            </div>
+           
 
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />

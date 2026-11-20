@@ -26,11 +26,22 @@ export const SITE_IMAGES = {
   steamExtraction: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/8f9de9909aed950c17ef8e211529655d.jpg',
   // Perforated leather conditioning
   leatherCare: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/82a11ad4a8b50bdffc856dc8893f877a.jpg',
-  // Before / After
-  beforeCarpet: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/6cf0404416efbc80ba79e1927743037d.png',
-  afterCarpet: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/1acac9eab46b7cd5295ff3f591375a23.png',
-  beforeDoor: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/a63a31834bb70893369fdb4a26709edf.png',
-  afterDoor: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/137f1254e0ac9974b628904bfed6b548.png',
+  // Official Before & After Minivan (downloaded from Juxtapose slider on jaxinteriordetail.com)
+  minivanBefore: '/images/minivan-before.png',
+  minivanAfter: '/images/minivan-after.png',
+  // Official Before & After Graphite SUV Exterior
+  suvDirty: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/1acac9eab46b7cd5295ff3f591375a23.png',
+  suvSpotless: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/6cf0404416efbc80ba79e1927743037d.png',
+  // Luxury vehicle showcase & mobile atelier
+  luxurySuvSunset: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/d41114220971c065ae692b72b54e59a3.png',
+  aboutHero: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/5b8df8b505b45f3fbfa9a4a5ba23dca7.jpg',
+  mobileWork1: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/3d9a38fb295dbf625f228bbf72efecc9.jpg',
+  mobileWork2: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/3e49623b0a60bd266520f3a944337716.jpg',
+  // Aliases for compatibility
+  beforeCarpet: '/images/minivan-before.png',
+  afterCarpet: '/images/minivan-after.png',
+  beforeDoor: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/1acac9eab46b7cd5295ff3f591375a23.png',
+  afterDoor: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/6cf0404416efbc80ba79e1927743037d.png',
   // Gallery showcase
   gallery1: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/efe82df4e229ad18296e097a37f494ad.jpg',
   gallery2: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/89980ee17ded6d21acb4d970fb452891.jpg',
@@ -39,7 +50,7 @@ export const SITE_IMAGES = {
   // Porsche black concourse
   porscheFullWorks: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1000&q=80',
   creviceWork: 'https://images.unsplash.com/photo-1507136566006-cfc505b114fc?auto=format&fit=crop&w=800&q=80',
-  teamDetailer: 'https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=800&q=80'
+  teamDetailer: 'https://horizons-cdn.hostinger.com/ad8dbca0-cd5a-4012-a846-1198b50657c7/3d9a38fb295dbf625f228bbf72efecc9.jpg'
 }
 
 export const BUSINESS_INFO = {
