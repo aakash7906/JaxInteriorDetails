@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Brand Theme - Warm Luxury Ochre & Deep Espresso Slate */
+    /* Primary Colors */
+    --primary: #a76536;
+    --primary-hover: #91542a;
+    --primary-foreground: #ffffff;
+    --primary-subtle: #fbf6f1;
+    --primary-border: #f0decb;
+
+    /* Secondary Colors */
+    --secondary: #1e1e1e;
+    --secondary-hover: #121212;
+    --secondary-foreground: #ffffff;
+    --secondary-subtle: #f6f5f3;
+    --secondary-border: #e9e7e2;
+
+    /* Backgrounds & Canvas */
+    --background: #fbf9f5;
+    --foreground: #171717;
+
+    --card: #ffffff;
+    --card-foreground: #171717;
+
+    --muted: #f4f1ea;
+    --muted-foreground: #78716c;
+
+    --surface: #efece5;
+
+    /* Inverted Colors (e.g. dark banner / dark cards) */
+    --inverted: #141416;
+    --inverted-foreground: #fdfdfd;
+    --inverted-muted: #9ca3af;
+    --inverted-border: #2e3038;
+
+    /* Text Colors */
+    --text-primary: #171717;
+    --text-secondary: #57534e;
+    --text-muted: #78716c;
+    --text-placeholder: #a8a29e;
+
+    /* Outline, Input & Borders */
+    --border: #e7e4dc;
+    --border-subtle: #f0eee8;
+    --input: #e7e4dc;
+    --ring: #a76536;
+    --outline: #d6d1c4;
+
+    /* Status & Highlights */
+    --accent: #a76536;
+    --accent-foreground: #ffffff;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --success: #15803d;
+    --success-bg: #ecfdf5;
+    --warning: #d97706;
+    --rating: #f59e0b;
+
+    /* Radii */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-full: 9999px;
+  }
+}
+
+/* Custom theme mapping to enable Tailwind semantic classes: bg-primary, text-primary, bg-card, text-card-foreground, bg-background, border-border, etc. */
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-primary-border: var(--primary-border);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-subtle: var(--secondary-subtle);
+  --color-secondary-border: var(--secondary-border);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-surface: var(--surface);
+
+  --color-inverted: var(--inverted);
+  --color-inverted-foreground: var(--inverted-foreground);
+  --color-inverted-muted: var(--inverted-muted);
+  --color-inverted-border: var(--inverted-border);
+
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-outline: var(--outline);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-rating: var(--rating);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar hiding helper */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
