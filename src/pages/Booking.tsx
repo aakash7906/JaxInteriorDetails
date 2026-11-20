@@ -1,585 +1,422 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
-import { Camera, Check, ShieldCheck, MapPin, Sparkles, Send, Phone, MessageSquare, Car, ArrowLeft, ArrowRight } from 'lucide-react'
+import {
+  Calendar as CalendarIcon,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  MapPin,
+  Check,
+  Send,
+  Phone,
+  MessageSquare,
+  ShieldCheck,
+  Car
+} from 'lucide-react'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
-import { SITE_IMAGES, BUSINESS_INFO, SERVICES_DATA } from '@/data/siteData'
+import { Select } from '@/components/ui/Select'
+import { Sheet } from '@/components/ui/Sheet'
+import { SERVICES_DATA, BUSINESS_INFO } from '@/data/siteData'
 
 export const Booking: React.FC = () => {
   const [searchParams] = useSearchParams()
   const initialTreatment = searchParams.get('treatment') || 'interior-detailing'
 
-  // Booking form step state: 1: Selection, 2: Details & Review, 3: Confirmation
-  const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1)
+  // Booking Form Fields
+  const [treatment, setTreatment] = useState(initialTreatment)
+  const [leadDetailer, setLeadDetailer] = useState('paul-lead')
+  const [vehiclePlatform, setVehiclePlatform] = useState('suv')
+  const [preferredTime, setPreferredTime] = useState<'morning' | 'afternoon'>('morning')
+  const [notes, setNotes] = useState('')
+  const [submitted, setSubmitted] = useState(false)
 
-  const [selectedTreatment, setSelectedTreatment] = useState<string>(initialTreatment)
-  const [vehiclePlatform, setVehiclePlatform] = useState<'sedan' | 'suv' | 'truck' | 'van'>('suv')
-  const [fullName, setFullName] = useState('Sterling Archer')
-  const [phoneNumber, setPhoneNumber] = useState('(904) 555-0199')
-  const [email, setEmail] = useState('sterling@curator.com')
-  const [address, setAddress] = useState('32256 or Ponte Vedra Beach')
-  const [preferredDate, setPreferredDate] = useState('Tomorrow Afternoon')
-  const [photoAttached, setPhotoAttached] = useState(false)
+  // Calendar State
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+  const [selectedDay, setSelectedDay] = useState(25)
+  const [selectedMonth] = useState('November')
+  const [selectedYear] = useState(2026)
 
-  // Update selected treatment if URL param changes
+  // Sync treatment param if changed
   useEffect(() => {
     const t = searchParams.get('treatment')
-    if (t) setSelectedTreatment(t)
+    if (t) setTreatment(t)
   }, [searchParams])
 
-  const treatments = [
-    { id: 'interior-detailing', title: 'Interior Detailing', desc: 'Deep extraction ($180)' },
-    { id: 'exterior-detailing', title: 'Exterior Detailing', desc: 'Paint & gloss care ($140)' },
-    { id: 'the-full-works', title: 'Full Works', desc: 'Master restoration ($310)' },
-    { id: 'consultation', title: 'Not Sure', desc: 'In-person consultation' },
+  // Treatment dropdown options
+  const treatmentOptions = [
+    { value: 'interior-detailing', label: 'Interior Detailing (Specialty) — $180' },
+    { value: 'exterior-detailing', label: 'Exterior Hand Wash & Seal — $140' },
+    { value: 'the-full-works', label: 'The Full Works (Complete Package) — $310' },
+    { value: 'custom-consultation', label: 'Free Mobile Consultation' },
   ]
 
-  const platforms = [
-    { id: 'sedan', label: 'Sedan / Coupe' },
-    { id: 'suv', label: 'SUV / Crossover' },
-    { id: 'truck', label: 'Truck' },
-    { id: 'van', label: 'Van / 3-Row' },
+  // Lead specialist options
+  const detailerOptions = [
+    { value: 'paul-lead', label: 'Paul Ceki (Master Lead Detailer)' },
+    { value: 'crew-alpha', label: 'Mobile Studio Rig Alpha (Jacksonville East)' },
+    { value: 'crew-beta', label: 'Mobile Studio Rig Beta (Ponte Vedra / St. Johns)' },
   ]
 
-  const selectedTierObj = SERVICES_DATA.find((s) => s.id === selectedTreatment)
+  // Vehicle platform options
+  const platformOptions = [
+    { value: 'sedan', label: 'Sedan / Coupe' },
+    { value: 'suv', label: 'SUV / Crossover' },
+    { value: 'truck', label: 'Truck / Pickup' },
+    { value: 'van', label: 'Van / 3-Row Wagon' },
+  ]
 
-  const handleNextToReview = (e: React.FormEvent) => {
+  // Calendar days generation (November 2026 starts on Sunday)
+  const daysOfWeek = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA']
+  const daysInNov = Array.from({ length: 30 }, (_, i) => i + 1)
+
+  // Formatted date string
+  const formattedDate = `Wed, Nov ${selectedDay}, ${selectedYear}`
+  const selectedTimeLabel =
+    preferredTime === 'morning'
+      ? 'Morning (8:30 AM – 12:00 PM)'
+      : 'Afternoon (1:00 PM – 4:30 PM)'
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setCurrentStep(2)
+    setSubmitted(true)
+    setTimeout(() => {
+      setSubmitted(false)
+    }, 4500)
   }
 
-  const handleConfirmBooking = () => {
-    setCurrentStep(3)
-  }
+  const selectedTier = SERVICES_DATA.find((s) => s.id === treatment)
 
   return (
-    <div className="flex flex-col gap-5 pb-8 animate-in fade-in duration-200 text-left">
-      {/* Header Banner */}
-      <div className="bg-gradient-to-b from-primary-subtle/70 to-transparent p-4 rounded-3xl border border-border-subtle">
-        <Badge variant="subtle" size="sm" className="mb-2">
-          Mobile Atelier
-        </Badge>
-        <h2 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
-          Mobile Detailing That Comes To You
-        </h2>
-        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-          No waiting in shop lines. We bring the studio to your driveway in Jacksonville.
-        </p>
+    <div className="flex flex-col gap-5 pb-10 animate-in fade-in duration-200 text-left">
+      {/* Top Mobile Studio Banner */}
+      <div className="flex items-center justify-between bg-card border border-border px-3.5 py-2.5 rounded-2xl shadow-2xs">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
+          <div>
+            <span className="text-[10px] font-bold text-foreground block">
+              MOBILE CONCIERGE ATELIER
+            </span>
+            <span className="text-[9px] text-muted-foreground font-medium">
+              Jacksonville & within 30 miles • Driveway Service
+            </span>
+          </div>
+        </div>
 
-        {/* Quick Contact Buttons */}
-        <div className="grid grid-cols-2 gap-2 mt-4">
+        <div className="flex items-center gap-1.5">
           <a
             href={`tel:${BUSINESS_INFO.rawPhone}`}
-            className="flex flex-col items-center justify-center p-3 rounded-2xl bg-card border border-outline shadow-2xs hover:bg-muted transition-colors text-center"
+            className="w-7 h-7 rounded-full bg-muted flex items-center justify-center text-foreground hover:bg-border transition-colors"
+            title="Call"
           >
-            <Phone className="w-4 h-4 text-primary mb-1" />
-            <span className="text-[11px] font-bold text-foreground">Call Direct</span>
-            <span className="text-[9px] text-muted-foreground">{BUSINESS_INFO.phone}</span>
+            <Phone className="w-3.5 h-3.5 text-primary" />
           </a>
-
           <a
             href={`sms:${BUSINESS_INFO.rawPhone}`}
-            className="flex flex-col items-center justify-center p-3 rounded-2xl bg-card border border-outline shadow-2xs hover:bg-muted transition-colors text-center"
+            className="w-7 h-7 rounded-full bg-muted flex items-center justify-center text-foreground hover:bg-border transition-colors"
+            title="Text"
           >
-            <MessageSquare className="w-4 h-4 text-primary mb-1" />
-            <span className="text-[11px] font-bold text-foreground">Text Us</span>
-            <span className="text-[9px] text-muted-foreground">{BUSINESS_INFO.phone}</span>
+            <MessageSquare className="w-3.5 h-3.5 text-primary" />
           </a>
         </div>
-
-        <div className="flex items-center justify-center gap-1.5 mt-3 text-[10px] text-muted-foreground font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-success" />
-          <span>Replies Mon–Fri, 9:00 AM–6:00 PM ET</span>
-        </div>
       </div>
 
-      {/* Progress Indicators */}
-      <div className="flex items-center justify-between px-1">
-        <div className="flex items-center gap-2">
-          <div
-            className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-              currentStep === 1
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-primary-subtle text-primary'
-            }`}
-          >
-            1
-          </div>
-          <span className="text-xs font-semibold text-foreground">Selection</span>
+      {/* Main Booking Card (Exact UI Layout from reference image) */}
+      <Card className="p-5 sm:p-6 border border-border shadow-xs">
+        <div className="mb-4">
+          <h2 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
+            Request New Appointment
+          </h2>
+          <p className="text-[11px] text-muted-foreground mt-0.5">
+            Choose your vehicle service, specialist & arrival window.
+          </p>
         </div>
-        <div className="w-8 h-0.5 bg-border-subtle" />
-        <div className="flex items-center gap-2">
-          <div
-            className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-              currentStep === 2
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground'
-            }`}
-          >
-            2
-          </div>
-          <span className="text-xs font-semibold text-foreground">Review</span>
-        </div>
-        <div className="w-8 h-0.5 bg-border-subtle" />
-        <div className="flex items-center gap-2">
-          <div
-            className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-              currentStep === 3
-                ? 'bg-success text-white'
-                : 'bg-muted text-muted-foreground'
-            }`}
-          >
-            3
-          </div>
-          <span className="text-xs font-semibold text-foreground">Confirmed</span>
-        </div>
-      </div>
 
-      {/* Step 1: Selection Form */}
-      {currentStep === 1 && (
-        <Card className="p-4 sm:p-5">
-          <form onSubmit={handleNextToReview} className="flex flex-col gap-4">
-            {/* Step 1.1: Treatment Selection */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-primary-subtle text-primary text-[10px] font-bold flex items-center justify-center">
-                    1
-                  </span>
-                  <span className="text-xs font-bold text-foreground">
-                    Select Treatment
-                  </span>
-                </div>
-                <span className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider">
-                  Required
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2">
-                {treatments.map((t) => {
-                  const isSelected = selectedTreatment === t.id
-
-                  return (
-                    <button
-                      key={t.id}
-                      type="button"
-                      onClick={() => setSelectedTreatment(t.id)}
-                      className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
-                        isSelected
-                          ? 'bg-primary text-primary-foreground border-primary shadow-xs'
-                          : 'bg-card text-foreground border-outline hover:bg-muted'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold">{t.title}</span>
-                        {isSelected && <Check className="w-3.5 h-3.5" />}
-                      </div>
-                      <span
-                        className={`text-[10px] block mt-0.5 ${
-                          isSelected ? 'text-primary-foreground/80' : 'text-muted-foreground'
-                        }`}
-                      >
-                        {t.desc}
-                      </span>
-                    </button>
-                  )
-                })}
-              </div>
+        {submitted ? (
+          <div className="py-8 text-center flex flex-col items-center justify-center gap-3">
+            <div className="w-14 h-14 rounded-full bg-success-bg text-success flex items-center justify-center">
+              <Check className="w-8 h-8 stroke-[3]" />
             </div>
+            <h3 className="text-base font-bold text-foreground">
+              Appointment Request Sent!
+            </h3>
+            <p className="text-xs text-muted-foreground max-w-xs leading-relaxed">
+              We received your request for <strong>{selectedTier?.title || 'Detaiing Service'}</strong> on{' '}
+              <strong>{formattedDate}</strong> ({selectedTimeLabel}). Our Jacksonville dispatch will confirm via text.
+            </p>
 
-            {/* Step 1.2: Vehicle Platform */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-primary-subtle text-primary text-[10px] font-bold flex items-center justify-center">
-                    2
-                  </span>
-                  <span className="text-xs font-bold text-foreground">
-                    Vehicle Platform
-                  </span>
-                </div>
-                <span className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider">
-                  Required
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2">
-                {platforms.map((p) => {
-                  const isSelected = vehiclePlatform === p.id
-
-                  return (
-                    <button
-                      key={p.id}
-                      type="button"
-                      onClick={() => setVehiclePlatform(p.id as any)}
-                      className={`px-3 py-2.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
-                        isSelected
-                          ? 'bg-primary text-primary-foreground border-primary shadow-xs'
-                          : 'bg-card text-foreground border-outline hover:bg-muted'
-                      }`}
-                    >
-                      <span className="text-xs font-semibold">{p.label}</span>
-                      {isSelected && <Check className="w-3.5 h-3.5" />}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Step 1.3: Contact & Location */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-primary-subtle text-primary text-[10px] font-bold flex items-center justify-center">
-                    3
-                  </span>
-                  <span className="text-xs font-bold text-foreground">
-                    Contact & Location
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2.5">
-                <div>
-                  <label className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    className="w-full bg-muted border border-outline rounded-xl px-3 py-2 text-xs text-foreground outline-none focus:ring-1 focus:ring-primary"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="w-full bg-muted border border-outline rounded-xl px-3 py-2 text-xs text-foreground outline-none focus:ring-1 focus:ring-primary"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-muted border border-outline rounded-xl px-3 py-2 text-xs text-foreground outline-none focus:ring-1 focus:ring-primary"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
-                    Jacksonville Address or Zip Code
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. 32256 or Ponte Vedra Beach"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    className="w-full bg-muted border border-outline rounded-xl px-3 py-2 text-xs text-foreground outline-none focus:ring-1 focus:ring-primary"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Optional Photo Attachment */}
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
-                  <Camera className="w-3.5 h-3.5 text-primary" />
-                  Instant Assessment Photo
-                </span>
-                <span className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider">
-                  Optional
-                </span>
-              </div>
-
-              <div
-                onClick={() => setPhotoAttached(!photoAttached)}
-                className={`p-4 border-2 border-dashed rounded-2xl text-center cursor-pointer transition-colors ${
-                  photoAttached
-                    ? 'border-success bg-success-bg text-success'
-                    : 'border-outline bg-muted/50 hover:bg-muted text-muted-foreground'
-                }`}
-              >
-                {photoAttached ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <Check className="w-4 h-4 text-success" />
-                    <span className="text-xs font-semibold">1 Cabin Photo Attached</span>
-                  </div>
-                ) : (
-                  <div>
-                    <Camera className="w-5 h-5 mx-auto text-muted-foreground mb-1" />
-                    <p className="text-xs font-semibold text-foreground">Tap to attach stain or cabin photo</p>
-                    <p className="text-[10px] text-muted-foreground mt-0.5">
-                      Allows precise quote calibration in minutes
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Next Button */}
-            <div className="pt-2">
-              <Button type="submit" variant="primary" fullWidth size="lg">
-                <span>Review Appointment Summary</span>
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </Button>
-              <p className="text-[10px] text-center text-muted-foreground mt-2">
-                Your information is kept strictly confidential and only used for your booking dispatch.
+            <div className="mt-3 p-3 bg-muted rounded-xl border border-border-subtle text-left text-xs w-full">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-primary block mb-1">
+                Booking Reference
+              </span>
+              <p className="text-[11px] text-muted-foreground">
+                Zero prep needed. Our rig arrives fully equipped with filtered water & silent electricity.
               </p>
             </div>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            {/* 1. Treatment Selector */}
+            <div>
+              <Select
+                label="Treatment:"
+                value={treatment}
+                onChange={setTreatment}
+                options={treatmentOptions}
+              />
+            </div>
+
+            {/* 2. Lead Specialist / Rig Selector */}
+            <div>
+              <Select
+                label="Lead Specialist / Dispatch Rig:"
+                value={leadDetailer}
+                onChange={setLeadDetailer}
+                options={detailerOptions}
+              />
+            </div>
+
+            {/* 3. Vehicle Platform */}
+            <div>
+              <Select
+                label="Vehicle Platform:"
+                value={vehiclePlatform}
+                onChange={setVehiclePlatform}
+                options={platformOptions}
+              />
+            </div>
+
+            {/* 4. Preferred Date Trigger (Opens Sheet) */}
+            <div>
+              <label className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
+                Preferred Date:
+              </label>
+
+              <button
+                type="button"
+                onClick={() => setIsCalendarOpen(true)}
+                className="w-full bg-card hover:bg-muted border border-outline rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-foreground transition-all flex items-center justify-between shadow-2xs cursor-pointer group"
+              >
+                <div className="flex items-center gap-2.5">
+                  <CalendarIcon className="w-4 h-4 text-primary" />
+                  <span className="font-semibold">{formattedDate}</span>
+                </div>
+                <span className="text-xs font-semibold text-primary group-hover:underline">
+                  Pick Date
+                </span>
+              </button>
+            </div>
+
+            {/* 5. Preferred Time (Morning / Afternoon Pills) */}
+            <div>
+              <label className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1.5">
+                Preferred Time
+              </label>
+              <div className="grid grid-cols-2 gap-2.5">
+                {/* Morning Pill */}
+                <button
+                  type="button"
+                  onClick={() => setPreferredTime('morning')}
+                  className={`p-3 rounded-2xl border text-center transition-all cursor-pointer ${
+                    preferredTime === 'morning'
+                      ? 'bg-primary-subtle border-primary text-primary font-bold shadow-2xs'
+                      : 'bg-card border-outline text-foreground hover:bg-muted'
+                  }`}
+                >
+                  <span className="text-xs block font-bold leading-tight">
+                    Morning
+                  </span>
+                  <span className="text-[10px] opacity-80 block mt-0.5">
+                    (8:30 AM – 12:00 PM)
+                  </span>
+                </button>
+
+                {/* Afternoon Pill */}
+                <button
+                  type="button"
+                  onClick={() => setPreferredTime('afternoon')}
+                  className={`p-3 rounded-2xl border text-center transition-all cursor-pointer ${
+                    preferredTime === 'afternoon'
+                      ? 'bg-primary-subtle border-primary text-primary font-bold shadow-2xs'
+                      : 'bg-card border-outline text-foreground hover:bg-muted'
+                  }`}
+                >
+                  <span className="text-xs block font-bold leading-tight">
+                    Afternoon
+                  </span>
+                  <span className="text-[10px] opacity-80 block mt-0.5">
+                    (1:00 PM – 4:30 PM)
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* 6. Symptoms or Specific Notes */}
+            <div>
+              <label className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
+                Vehicle Condition or Specific Notes:
+              </label>
+              <textarea
+                rows={3}
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="e.g. Stubborn coffee stain on driver seat, beach sand extraction in trunk, or gate access code..."
+                className="w-full bg-card border border-outline rounded-2xl p-3 text-xs text-foreground placeholder-text-placeholder outline-none focus:ring-1 focus:ring-primary resize-none shadow-2xs"
+              />
+            </div>
+
+            {/* 7. Submit Button */}
+            <div className="pt-1">
+              <Button type="submit" variant="primary" fullWidth size="lg">
+                <span>Submit Booking Request</span>
+                <Send className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
           </form>
-        </Card>
-      )}
-
-      {/* Step 2: Review Screen */}
-      {currentStep === 2 && (
-        <Card className="p-4 sm:p-5">
-          <div className="flex items-center justify-between mb-3 pb-2 border-b border-border-subtle">
-            <button
-              onClick={() => setCurrentStep(1)}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" /> Edit Details
-            </button>
-            <Badge variant="subtle" size="sm">
-              Review Before Dispatch
-            </Badge>
-          </div>
-
-          <h3 className="text-sm font-bold text-foreground mb-3">
-            Appointment Summary
-          </h3>
-
-          <div className="flex flex-col gap-2.5 bg-muted p-3.5 rounded-xl border border-border-subtle">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">Selected Service:</span>
-              <span className="font-bold text-foreground">
-                {selectedTierObj ? selectedTierObj.title : 'Custom Consultation'}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">Vehicle Platform:</span>
-              <span className="font-bold text-foreground uppercase">{vehiclePlatform}</span>
-            </div>
-
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">Base Starting Rate:</span>
-              <span className="font-bold text-primary">
-                {selectedTierObj ? selectedTierObj.price : 'Custom Quote'}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">Client Name:</span>
-              <span className="font-medium text-foreground">{fullName}</span>
-            </div>
-
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">Phone:</span>
-              <span className="font-medium text-foreground">{phoneNumber}</span>
-            </div>
-
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">Dispatch Location:</span>
-              <span className="font-medium text-foreground">{address}</span>
-            </div>
-
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">Photo Attached:</span>
-              <span className="font-medium text-foreground">
-                {photoAttached ? 'Yes (1 photo)' : 'None (standard inspection)'}
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-4 flex flex-col gap-2">
-            <Button
-              onClick={handleConfirmBooking}
-              variant="primary"
-              fullWidth
-              size="lg"
-            >
-              <Check className="w-4 h-4 mr-1 stroke-[3]" />
-              <span>Confirm & Dispatch Mobile Booking</span>
-            </Button>
-            <button
-              onClick={() => setCurrentStep(1)}
-              className="text-xs text-muted-foreground hover:text-foreground py-1 text-center"
-            >
-              Make Changes
-            </button>
-          </div>
-        </Card>
-      )}
-
-      {/* Step 3: Success Confirmation Screen */}
-      {currentStep === 3 && (
-        <Card className="p-6 text-center">
-          <div className="w-14 h-14 rounded-full bg-success-bg text-success mx-auto flex items-center justify-center mb-3">
-            <Check className="w-8 h-8 stroke-[3]" />
-          </div>
-          <h3 className="text-base font-bold text-foreground">
-            Mobile Booking Dispatched!
-          </h3>
-          <p className="text-xs text-muted-foreground mt-1 max-w-xs mx-auto leading-relaxed">
-            Thank you, <strong className="text-foreground">{fullName}</strong>. Our Jacksonville lead detailer has received your request for <strong>{selectedTierObj?.title}</strong> and will text your confirmation shortly.
-          </p>
-
-          <div className="mt-4 p-3 bg-muted rounded-xl border border-border-subtle text-left text-xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-primary block mb-1">
-              Next Steps
-            </span>
-            <ul className="text-muted-foreground space-y-1 text-[11px]">
-              <li>• We reply to your phone number: {phoneNumber}</li>
-              <li>• Zero prep needed from you; our rig brings pure water & electricity.</li>
-              <li>• Guaranteed on-time arrival within Jacksonville & 30-mile radius.</li>
-            </ul>
-          </div>
-
-          <div className="mt-4 flex flex-col gap-2">
-            <Button
-              onClick={() => setCurrentStep(1)}
-              variant="outline"
-              fullWidth
-            >
-              Book Another Service
-            </Button>
-            <Link
-              to="/gallery"
-              className="text-xs text-primary font-semibold hover:underline mt-1"
-            >
-              View Client Transformations &gt;
-            </Link>
-          </div>
-        </Card>
-      )}
-
-      {/* Precision Craftsmanship Preview */}
-      <div>
-        <div className="flex items-center justify-between mb-2 px-0.5">
-          <h3 className="text-sm font-bold text-foreground">
-            Precision Craftsmanship
-          </h3>
-          <a
-            href={`sms:${BUSINESS_INFO.rawPhone}`}
-            className="text-[10px] font-semibold text-primary hover:underline"
-          >
-            TEXT PHOTO &gt;
-          </a>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2.5">
-          <Card className="overflow-hidden p-2 text-left">
-            <div className="h-24 rounded-lg overflow-hidden mb-1.5">
-              <img
-                src={SITE_IMAGES.heroInterior}
-                alt="Full Interior"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="text-[11px] font-bold text-foreground block">
-              Full Interior
-            </span>
-            <span className="text-[9px] text-muted-foreground">Matte leather finish</span>
-          </Card>
-
-          <Card className="overflow-hidden p-2 text-left">
-            <div className="h-24 rounded-lg overflow-hidden mb-1.5">
-              <img
-                src={SITE_IMAGES.leatherCare}
-                alt="Crevice Detailing"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="text-[11px] font-bold text-foreground block">
-              Crevice Detailing
-            </span>
-            <span className="text-[9px] text-muted-foreground">Microfiber extraction</span>
-          </Card>
-        </div>
-      </div>
-
-      {/* Map / Coverage Card */}
-      <Card className="p-4 text-left">
-        <div className="flex items-center justify-between mb-2">
-          <div>
-            <span className="text-[9px] uppercase tracking-wider font-bold text-primary">
-              Service Coverage
-            </span>
-            <h4 className="text-xs font-bold text-foreground">
-              Greater Jacksonville Region
-            </h4>
-          </div>
-          <div className="w-6 h-6 rounded-lg bg-primary-subtle text-primary flex items-center justify-center">
-            <MapPin className="w-3.5 h-3.5" />
-          </div>
-        </div>
-
-        {/* Jacksonville stylised map visual */}
-        <div className="h-32 rounded-xl bg-sky-50 border border-sky-100 overflow-hidden relative flex items-center justify-center">
-          <div className="absolute inset-0 opacity-40 bg-[radial-gradient(#0284c7_1px,transparent_1px)] [background-size:12px_12px]" />
-          <div className="relative text-center z-10">
-            <div className="w-7 h-7 mx-auto rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md animate-bounce">
-              <MapPin className="w-4 h-4" />
-            </div>
-            <span className="text-xs font-bold text-stone-800 bg-white/80 backdrop-blur-xs px-2 py-0.5 rounded-full mt-1 inline-block border border-stone-200">
-              Jacksonville Mobile HQ
-            </span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-border-subtle text-center">
-          <div>
-            <span className="text-xs font-bold text-foreground block">30 mi</span>
-            <span className="text-[9px] text-muted-foreground">Radius</span>
-          </div>
-          <div>
-            <span className="text-xs font-bold text-foreground block">Zero</span>
-            <span className="text-[9px] text-muted-foreground">Shop Wait</span>
-          </div>
-          <div>
-            <span className="text-xs font-bold text-foreground block">100%</span>
-            <span className="text-[9px] text-muted-foreground">Mobile Unit</span>
-          </div>
-        </div>
+        )}
       </Card>
 
-      {/* Rating Footer Strip */}
-      <div className="p-3 bg-card rounded-2xl border border-border flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-            <ShieldCheck className="w-4 h-4 text-primary" />
+      {/* Trust & Guarantee Banner */}
+      <div className="p-3 bg-muted rounded-2xl flex items-center justify-between text-[11px] text-muted-foreground">
+        <span className="flex items-center gap-1.5 font-medium text-foreground">
+          <ShieldCheck className="w-4 h-4 text-primary" />
+          100% Insured Jacksonville Rig
+        </span>
+        <span>Replies in &lt; 15 Mins</span>
+      </div>
+
+      {/* Appointment Calendar Sheet Component (exact layout from 2nd reference image) */}
+      <Sheet
+        isOpen={isCalendarOpen}
+        onClose={() => setIsCalendarOpen(false)}
+        title="Appointment Calendar"
+        subtitle="Jax Interior Detail • Select or sync visit date"
+        maxWidth="sm"
+      >
+        <div className="flex flex-col gap-3.5 text-left pt-1">
+          {/* Calendar Card Container */}
+          <div className="p-3.5 rounded-2xl border border-border bg-card shadow-2xs">
+            {/* Calendar Header Month & Year */}
+            <div className="flex items-center justify-between mb-3 pb-2 border-b border-border-subtle">
+              <div className="flex items-center gap-2">
+                <CalendarIcon className="w-4 h-4 text-primary" />
+                <span className="text-xs sm:text-sm font-bold text-foreground">
+                  {selectedMonth} {selectedYear}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  className="w-7 h-7 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                  aria-label="Previous month"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  className="w-7 h-7 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                  aria-label="Next month"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Days of week header */}
+            <div className="grid grid-cols-7 text-center mb-1.5">
+              {daysOfWeek.map((day) => (
+                <span
+                  key={day}
+                  className="text-[10px] font-bold text-muted-foreground uppercase"
+                >
+                  {day}
+                </span>
+              ))}
+            </div>
+
+            {/* Calendar Grid Numbers */}
+            <div className="grid grid-cols-7 gap-1 text-center">
+              {daysInNov.map((day) => {
+                const isSelected = selectedDay === day
+
+                return (
+                  <button
+                    key={day}
+                    type="button"
+                    onClick={() => setSelectedDay(day)}
+                    className={`h-8 w-8 mx-auto rounded-full text-xs font-semibold flex items-center justify-center transition-all cursor-pointer ${
+                      isSelected
+                        ? 'bg-primary text-primary-foreground shadow-xs font-bold'
+                        : 'text-foreground hover:bg-muted'
+                    }`}
+                  >
+                    {day}
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Active Legend */}
+            <div className="flex items-center justify-between pt-3 mt-2 border-t border-border-subtle text-[11px]">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-primary" />
+                <span className="text-muted-foreground">Scheduled Visit</span>
+              </div>
+              <span className="font-bold text-foreground">
+                Nov {selectedDay}, {selectedYear}
+              </span>
+            </div>
           </div>
-          <div>
-            <span className="text-xs font-bold text-foreground block leading-tight">
-              5.0 ★ Google Rated
-            </span>
-            <span className="text-[9px] text-muted-foreground">
-              Jacksonville & 30 mi radius • Pure Driveway Care
-            </span>
+
+          {/* Selected Date & Window Summary Card */}
+          <div className="p-3 bg-muted rounded-2xl border border-border-subtle flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
+                Selected Date:
+              </span>
+              <span className="text-xs font-bold text-foreground">
+                {formattedDate}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <Clock className="w-3.5 h-3.5 text-primary shrink-0" />
+              <span>Reserved Window: {selectedTimeLabel}</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+              <span className="truncate">Client Address: Jacksonville & within 30 miles</span>
+            </div>
+          </div>
+
+          {/* Sheet Confirmation Actions */}
+          <div className="flex flex-col gap-2 pt-1">
+            <Button
+              type="button"
+              variant="primary"
+              fullWidth
+              size="md"
+              onClick={() => setIsCalendarOpen(false)}
+            >
+              <Check className="w-4 h-4 mr-1 stroke-[3]" />
+              <span>Confirm & Set Date</span>
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              fullWidth
+              size="sm"
+              onClick={() => setIsCalendarOpen(false)}
+            >
+              Close Calendar
+            </Button>
           </div>
         </div>
-        <span className="text-[9px] font-bold text-success bg-success-bg px-2 py-1 rounded-lg">
-          Licensed & Insured
-        </span>
-      </div>
+      </Sheet>
     </div>
   )
 }
