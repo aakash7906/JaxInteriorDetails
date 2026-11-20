@@ -48,7 +48,7 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
             iframeRef.current.contentWindow.location.replace(targetPath)
           }
         }
-      } catch {
+      } catch (e) {
         // Cross-origin safety
       }
     }
@@ -62,18 +62,18 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
     return <>{children}</>
   }
 
-  // On Desktop (>= 768px) at top level: render clean soft studio backdrop with slim rounded device bezel
+  // On Desktop (>= 768px) at top level: render refined compact Apple iPhone chassis
   return (
-    <div className="min-h-screen w-full bg-gradient-to-tr from-[#f0f4fd] via-[#f7f9fe] to-[#fbf7fc] flex items-center justify-center p-4 sm:p-6 select-none relative overflow-x-hidden font-sans">
+    <div className="min-h-screen w-full bg-gradient-to-tr from-[#edf2fc] via-[#f5f8fe] to-[#faf5fc] flex items-center justify-center p-4 sm:p-6 select-none relative overflow-x-hidden font-sans">
       {/* Subtle soft ambient studio glows */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[550px] h-[550px] bg-sky-200/25 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-sky-200/25 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[450px] h-[450px] bg-purple-200/20 rounded-full blur-[130px] pointer-events-none" />
 
-      {/* The Clean Phone Mockup Container */}
+      {/* The Apple iPhone Chassis Mockup Container */}
       <div className="relative z-10 flex flex-col items-center">
-        {/* Device Outer Rim (Thin, sleek black bezel with rounded corners and diffuse drop shadow) */}
-        <div className="relative w-[393px] h-[852px] max-h-[92vh] bg-black rounded-[46px] p-[6px] shadow-[0_20px_50px_rgba(0,0,0,0.18),0_10px_25px_rgba(0,0,0,0.12)] flex flex-col">
-          {/* Inner Screen Display (Edge-to-Edge with matching radius) */}
+        {/* Apple Exterior Aluminum/Titanium Chassis - Compact Dimensions (360px × 730px, max-h 86vh) */}
+        <div className="relative w-[360px] h-[730px] max-h-[86vh] bg-[#1a1a1d] rounded-[46px] p-[6px] shadow-[0_24px_60px_-10px_rgba(0,0,0,0.22),0_12px_28px_-6px_rgba(0,0,0,0.14),0_0_0_1px_rgba(255,255,255,0.08)] ring-1 ring-black/80 flex flex-col">
+          {/* Inner Screen Display (Edge-to-Edge with sleek Apple Bezel radius) */}
           <div className="relative w-full h-full bg-[var(--background)] rounded-[40px] overflow-hidden flex flex-col">
             {/* The Isolated Viewport Iframe */}
             <iframe
@@ -90,8 +90,8 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
           </div>
         </div>
 
-        {/* Soft ground shadow underneath device */}
-        <div className="w-72 h-8 bg-slate-900/10 blur-xl rounded-full mt-3 pointer-events-none" />
+        {/* Soft diffused ground shadow underneath device */}
+        <div className="w-64 h-6 bg-slate-900/15 blur-lg rounded-full mt-3 pointer-events-none" />
       </div>
     </div>
   )

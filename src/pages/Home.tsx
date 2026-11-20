@@ -118,9 +118,7 @@ export const Home: React.FC = () => {
       <div className="text-left">
         <div className="flex items-center justify-between mb-2.5 px-0.5">
           <div>
-            <span className="text-[10px] uppercase tracking-wider font-semibold text-primary">
-              01 / Signature Care
-            </span>
+            
             <h3 className="text-base font-bold text-foreground leading-tight">
               Tailored Treatments
             </h3>
@@ -134,65 +132,66 @@ export const Home: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-2 gap-2.5">
-          <Link to="/services/interior-detailing">
-            <Card className="p-2.5 flex flex-col justify-between overflow-hidden h-full" interactive>
-              <div className="relative h-28 rounded-xl overflow-hidden mb-2">
-                <img
-                  src={SITE_IMAGES.heroInterior}
-                  alt="Interior Detailing"
-                  className="w-full h-full object-cover"
-                />
-                <span className="absolute top-1.5 left-1.5 bg-black/60 backdrop-blur-xs text-white text-[9px] px-2 py-0.5 rounded font-medium uppercase">
-                  Specialty
-                </span>
-              </div>
+          <Link to="/services/interior-detailing" className="group flex flex-col">
+            {/* Image outside card */}
+            <div className="relative h-32 rounded-2xl overflow-hidden mb-2 shadow-xs border border-border">
+              <img
+                src={SITE_IMAGES.heroInterior}
+                alt="Interior Detailing"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+             
+            </div>
+
+            {/* Text details below image */}
+            <div className="p-1 flex flex-col flex-1 justify-between">
               <div>
-                <h4 className="text-xs font-bold text-foreground">Interior Detailing</h4>
-                <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-2">
-                  Carpet shampooing, deep fiber extraction & leather care.
-                </p>
+                <h4 className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">
+                  Interior Detailing
+                </h4>
+              
               </div>
-              <div className="mt-2.5 pt-2 border-t border-border-subtle flex items-center justify-between">
+              <div className="mt-2 pt-1.5 flex items-center justify-between">
                 <span className="text-[10px] font-bold text-primary">DEEP RESTORATION</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-primary" />
+                <ArrowUpRight className="w-3.5 h-3.5 text-primary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>
-            </Card>
+            </div>
           </Link>
 
-          <Link to="/services/exterior-detailing">
-            <Card className="p-2.5 flex flex-col justify-between overflow-hidden h-full" interactive>
-              <div className="relative h-28 rounded-xl overflow-hidden mb-2">
-                <img
-                  src={SITE_IMAGES.exteriorWash}
-                  alt="Exterior Detailing"
-                  className="w-full h-full object-cover"
-                />
-                <span className="absolute top-1.5 left-1.5 bg-black/60 backdrop-blur-xs text-white text-[9px] px-2 py-0.5 rounded font-medium uppercase">
-                  Foam & Protect
-                </span>
-              </div>
+          <Link to="/services/exterior-detailing" className="group flex flex-col">
+            {/* Image outside card */}
+            <div className="relative h-32 rounded-2xl overflow-hidden mb-2 shadow-xs border border-border">
+              <img
+                src={SITE_IMAGES.exteriorWash}
+                alt="Exterior Detailing"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+             
+            </div>
+
+            {/* Text details below image */}
+            <div className="p-1 flex flex-col flex-1 justify-between">
               <div>
-                <h4 className="text-xs font-bold text-foreground">Exterior Hand Wash</h4>
-                <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-2">
-                  Meticulous hand wash, wheel barrel decontam & gloss sealant.
-                </p>
+                <h4 className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">
+                  Exterior Hand Wash
+                </h4>
+                
               </div>
-              <div className="mt-2.5 pt-2 border-t border-border-subtle flex items-center justify-between">
+              <div className="mt-2 pt-1.5 flex items-center justify-between">
                 <span className="text-[10px] font-bold text-primary">MIRROR FINISH</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-primary" />
+                <ArrowUpRight className="w-3.5 h-3.5 text-primary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>
-            </Card>
+            </div>
           </Link>
         </div>
       </div>
 
       {/* Interactive Before & After Transformation Slider */}
+      {/* Interactive Before & After Transformation Slider */}
       <div className="text-left">
         <div className="flex items-center justify-between mb-2 px-0.5">
           <div>
-            <span className="text-[10px] uppercase tracking-wider font-semibold text-primary">
-              02 / Real Results
-            </span>
+            
             <h3 className="text-base font-bold text-foreground leading-tight">
               The Transformation
             </h3>
@@ -200,58 +199,54 @@ export const Home: React.FC = () => {
           <span className="text-[10px] text-muted-foreground font-medium">Drag Slider</span>
         </div>
 
-        <Card className="p-3 overflow-hidden">
-          <div className="relative h-56 sm:h-64 w-full rounded-xl overflow-hidden select-none">
-            {/* After Image */}
-            <img
-              src={SITE_IMAGES.afterCarpet}
-              alt="After Steam Extraction Detail"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute top-2 right-2 bg-black/70 text-white text-[10px] font-medium px-2 py-0.5 rounded-full z-10">
-              AFTER STEAM DETAIL
-            </div>
-
-            {/* Before Image */}
-            <div
-              className="absolute inset-y-0 left-0 overflow-hidden"
-              style={{ width: `${sliderPos}%` }}
-            >
-              <img
-                src={SITE_IMAGES.beforeCarpet}
-                alt="Before Detailing"
-                className="absolute inset-0 w-full h-full object-cover max-w-none"
-                style={{ width: '100%', height: '100%' }}
-              />
-              <div className="absolute top-2 left-2 bg-black/70 text-white text-[10px] font-medium px-2 py-0.5 rounded-full z-10">
-                BEFORE
-              </div>
-            </div>
-
-            {/* Slider Divider Bar */}
-            <div
-              className="absolute top-0 bottom-0 w-0.5 bg-white shadow-lg pointer-events-none"
-              style={{ left: `${sliderPos}%` }}
-            >
-              <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center text-stone-800 text-xs font-bold">
-                ↔
-              </div>
-            </div>
-
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={sliderPos}
-              onChange={handleSliderChange}
-              className="absolute inset-0 opacity-0 cursor-ew-resize w-full h-full z-20"
-              aria-label="Before and after comparison slider"
-            />
+        {/* Comparison Image Outside Card */}
+        <div className="relative h-60 sm:h-64 w-full rounded-2xl overflow-hidden select-none border border-border shadow-xs">
+          {/* After Image */}
+          <img
+            src={SITE_IMAGES.afterCarpet}
+            alt="After Steam Extraction Detail"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-xs text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">
+            AFTER STEAM DETAIL
           </div>
-          <p className="text-[11px] text-muted-foreground mt-2 text-center">
-            High-heat steam extraction dissolves stubborn spills, coffee blemishes & road grime.
-          </p>
-        </Card>
+
+          {/* Before Image */}
+          <div
+            className="absolute inset-y-0 left-0 overflow-hidden"
+            style={{ width: `${sliderPos}%` }}
+          >
+            <img
+              src={SITE_IMAGES.beforeCarpet}
+              alt="Before Detailing"
+              className="absolute inset-0 w-full h-full object-cover max-w-none"
+              style={{ width: '100%', height: '100%' }}
+            />
+            <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">
+              BEFORE
+            </div>
+          </div>
+
+          {/* Slider Divider Bar */}
+          <div
+            className="absolute top-0 bottom-0 w-0.5 bg-white shadow-lg pointer-events-none"
+            style={{ left: `${sliderPos}%` }}
+          >
+            <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center text-stone-800 text-xs font-bold">
+              ↔
+            </div>
+          </div>
+
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={sliderPos}
+            onChange={handleSliderChange}
+            className="absolute inset-0 opacity-0 cursor-ew-resize w-full h-full z-20"
+            aria-label="Before and after comparison slider"
+          />
+        </div>
       </div>
 
       {/* The Jax Precision Touch Grid */}
