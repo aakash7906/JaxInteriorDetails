@@ -67,7 +67,7 @@
   }
 }
 
-/* Custom theme mapping to enable Tailwind semantic classes: bg-primary, text-primary, bg-card, text-card-foreground, bg-background, border-border, etc. */
+/* Custom theme mapping to enable Tailwind semantic classes */
 @theme {
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
@@ -122,6 +122,19 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide scrollbars globally (Native Mobile App Behavior) */
+html, body, *, *::before, *::after {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* Custom scrollbar hiding helper */

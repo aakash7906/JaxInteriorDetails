@@ -37,19 +37,10 @@ export const Home: React.FC = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-inverted via-inverted/40 to-transparent" />
 
-          <div className="absolute top-4 left-4">
-            <Badge variant="inverted" size="sm" dot>
-              We Come To You • Within 30 Miles
-            </Badge>
-          </div>
-
           <div className="absolute bottom-4 left-4 right-4 text-left">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-inverted-foreground leading-tight">
               Mobile Interior Detailing in Jacksonville, FL
             </h2>
-            <p className="text-xs text-inverted-muted mt-1 line-clamp-2">
-              A deeper clean. A higher standard of automotive care.
-            </p>
 
             <div className="grid grid-cols-2 gap-2 mt-3.5">
               <a

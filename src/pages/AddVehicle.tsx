@@ -109,15 +109,9 @@ export const AddVehicle: React.FC<AddVehicleProps> = ({ onVehicleAdded }) => {
 
       {/* Intro Banner */}
       <div className="px-1">
-        <Badge variant="subtle" size="sm" className="mb-1.5">
-          Garage Concierge
-        </Badge>
         <h3 className="text-xl font-bold text-foreground tracking-tight">
           Register Your Vehicle
         </h3>
-        <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-          Save your car specifications for instant one-tap booking and tailor-fit care formulas.
-        </p>
       </div>
 
       {/* Main Form Card */}
@@ -285,21 +279,6 @@ export const AddVehicle: React.FC<AddVehicleProps> = ({ onVehicleAdded }) => {
             </div>
           </form>
         )}
-      </Card>
-
-      {/* Detail Care Tip Card */}
-      <Card className="p-3.5 bg-muted border-none">
-        <div className="flex items-start gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-primary-subtle text-primary flex items-center justify-center shrink-0">
-            <Sparkles className="w-3.5 h-3.5" />
-          </div>
-          <div>
-            <h5 className="text-xs font-bold text-foreground">Why register your vehicle?</h5>
-            <p className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">
-              Our mobile rig customizes water extraction temperatures, pH cleaners, and leather conditioners specific to your vehicle&apos;s factory upholstery materials.
-            </p>
-          </div>
-        </div>
       </Card>
     </div>
   )

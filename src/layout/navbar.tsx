@@ -1,12 +1,13 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Compass, Sparkles, Image as ImageIcon, Calendar } from 'lucide-react'
+import { Home, Image as ImageIcon, Calendar } from 'lucide-react'
+import { CarSuvIcon } from '@/components/icons/CarSuvIcon'
 import { cn } from '@/lib/utils'
 
 export const Navbar: React.FC = () => {
   const tabs = [
-    { to: '/', label: 'Explore', icon: Compass },
-    { to: '/services', label: 'Services', icon: Sparkles },
+    { to: '/', label: 'Home', icon: Home },
+    { to: '/services', label: 'Services', icon: CarSuvIcon },
     { to: '/gallery', label: 'Gallery', icon: ImageIcon },
     { to: '/booking', label: 'Book', icon: Calendar },
   ]

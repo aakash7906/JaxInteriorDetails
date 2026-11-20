@@ -50,15 +50,10 @@ export const Gallery: React.FC = () => {
     <div className="flex flex-col gap-5 pb-8 animate-in fade-in duration-200 text-left">
       {/* Intro Header */}
       <div className="px-0.5">
-        <Badge variant="subtle" size="sm" className="mb-1.5">
-          Visual Proof
-        </Badge>
+       
         <h2 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
           See the Difference an Interior Detail Makes
         </h2>
-        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-          Illustrative transformations showing the power of deep extraction, bespoke conditioning, and meticulous care.
-        </p>
       </div>
 
       {/* Featured Deep Extraction Chamber (Before & After) */}

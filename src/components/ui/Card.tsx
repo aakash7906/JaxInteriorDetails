@@ -10,15 +10,15 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = 'default', interactive = false, children, ...props }, ref) => {
     const variants = {
       default:
-        'bg-[var(--bg-card)] border border-[var(--border-color)] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.04)] rounded-2xl',
+        'bg-card border border-border shadow-[0_2px_8px_-2px_rgba(0,0,0,0.04)] rounded-2xl',
       elevated:
-        'bg-[var(--bg-card)] border border-[var(--border-color)] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.06)] rounded-2xl',
+        'bg-card border border-border shadow-[0_8px_24px_-4px_rgba(0,0,0,0.06)] rounded-2xl',
       subtle:
-        'bg-[var(--bg-muted)] border border-[var(--border-subtle)] rounded-2xl',
+        'bg-muted border border-border-subtle rounded-2xl',
       inverted:
-        'bg-[var(--inverted-bg)] text-[var(--inverted-text)] border border-[var(--inverted-border)] rounded-2xl',
+        'bg-inverted text-inverted-foreground border border-inverted-border rounded-2xl',
       outline:
-        'bg-transparent border border-[var(--outline-color)] rounded-2xl',
+        'bg-transparent border border-outline rounded-2xl',
     }
 
     return (
@@ -27,7 +27,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         className={cn(
           variants[variant],
           interactive &&
-            'transition-all duration-200 hover:shadow-md hover:border-[var(--primary-border)] cursor-pointer',
+            'transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 hover:border-primary active:scale-[0.99] cursor-pointer',
           className
         )}
         {...props}
